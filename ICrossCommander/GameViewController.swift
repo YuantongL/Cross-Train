@@ -12,8 +12,8 @@ import SpriteKit
 extension SKNode {
     class func unarchiveFromFile(file : NSString) -> SKNode? {
         if let path = NSBundle.mainBundle().pathForResource(file, ofType: "sks") {
-            var sceneData = NSData.dataWithContentsOfFile(path, options: .DataReadingMappedIfSafe, error: nil)
-            var archiver = NSKeyedUnarchiver(forReadingWithData: sceneData)
+            var sceneData = NSData(contentsOfFile: path, options: .DataReadingMappedIfSafe, error: nil)
+            var archiver = NSKeyedUnarchiver(forReadingWithData: sceneData!)
             
             archiver.setClass(self.classForKeyedUnarchiver(), forClassName: "SKScene")
             let scene = archiver.decodeObjectForKey(NSKeyedArchiveRootObjectKey) as GameScene
@@ -29,9 +29,16 @@ class GameViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         if let scene = GameScene.unarchiveFromFile("GameScene") as? GameScene {
-            // Configure the view.
+            // Configure the view. 
+            
+            Bank.storeScene(Mainplay.init(size: CGSizeMake(scene.frame.width, scene.frame.height)), x: 2)
+            Bank.storeScene(gallary.init(size: CGSizeMake(scene.frame.width, scene.frame.height)), x: 3)
+            Bank.storeScene(metric.init(size: CGSizeMake(scene.frame.width, scene.frame.height)), x: 4)
+            Bank.storeScene(leaderboard.init(size: CGSizeMake(scene.frame.width, scene.frame.height)), x: 5)
+            Bank.storeScene(missionselect.init(size: CGSizeMake(scene.frame.width, scene.frame.height)), x: 6)
+            
+            
             let skView = self.view as SKView
             skView.showsFPS = true
             skView.showsNodeCount = true
@@ -43,6 +50,8 @@ class GameViewController: UIViewController {
             scene.scaleMode = .AspectFill
             
             skView.presentScene(scene)
+            
+            
         }
     }
 
@@ -52,9 +61,9 @@ class GameViewController: UIViewController {
 
     override func supportedInterfaceOrientations() -> Int {
         if UIDevice.currentDevice().userInterfaceIdiom == .Phone {
-            return Int(UIInterfaceOrientationMask.AllButUpsideDown.toRaw())
+            return Int(UIInterfaceOrientationMask.AllButUpsideDown.rawValue)
         } else {
-            return Int(UIInterfaceOrientationMask.All.toRaw())
+            return Int(UIInterfaceOrientationMask.All.rawValue)
         }
     }
 
