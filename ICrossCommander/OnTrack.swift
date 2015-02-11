@@ -5,8 +5,8 @@
 //  Created by Lyt on 12/20/14.
 //  Copyright (c) 2014 Lyt. All rights reserved.
 //
+
 //  This class serves for control the train on track
-//
 
 import Foundation
 import SpriteKit
@@ -37,18 +37,18 @@ class OnTrack {
         return returnnode
     }
     
-    
+    //When this function is called, it generate one train and put it on the rail
+    //This function used to call a train on to the secreen, when train is out, get the sknodes remove
     func LetTrainGo(world:Int, train:Int, trainway:SKSpriteNode, zhengfan:Int) {
-        //This function used to call a train on to the secreen, when train is out, get the sknodes remove
         //zhengfan = 0 = up, 1 = down
         let train_scale:CGFloat = 1.03
-        var Distance:Float = 720 //每个车厢之间的间隔
-        var NumOfObjects:NSInteger = 6   //一共有多少个车厢
+        var Distance:Float = 720 //The interval between each train sections
+        var NumOfObjects:NSInteger = 6   //Total number of sections
                 
         //Head--------------------------------------------------
         var train_head:SKSpriteNode!
         train_head = self.GetComponent(world, train: train, compo: "Head")
-        train_head.position = CGPoint(x: 0, y: 0) //火车头的初始位置
+        train_head.position = CGPoint(x: 0, y: 0) //The initial positon of the head
         train_head.setScale(train_scale);
         
         if(zhengfan == 0){
@@ -96,7 +96,7 @@ class OnTrack {
         
         
         //Other---------------animations-----------------------------------
-        var run_time:NSTimeInterval!    //火车过的时间，速度控制
+        var run_time:NSTimeInterval!    //Time of train stay on the rail, used to control speed
         if(train == 0){
             run_time = 8
         }else if(train == 1){
@@ -120,8 +120,8 @@ class OnTrack {
                 arrow.removeFromParent()
                 trainway.runAction(SKAction.moveTo(CGPointMake(7000, trainway.position.y), duration: run_time), completion: {()
                     trainway.position = CGPoint(x:-1200, y:trainway.position.y)
-                    trainway.removeAllChildren()  //去除所有的child等待下次再加
-                    OnGoingTrain = false    //没过火车标志
+                    trainway.removeAllChildren()  //remove all child
+                    OnGoingTrain = false    //Set the sign of trains on the rail
                 })
             })
             
@@ -143,8 +143,8 @@ class OnTrack {
                 trainway.runAction(SKAction.moveTo(CGPointMake(-7000, trainway.position.y), duration: run_time), completion: {()
                     arrow.removeFromParent()
                     trainway.position = CGPoint(x:1200, y:trainway.position.y)
-                    trainway.removeAllChildren()  //去除所有的child等待下次再加
-                    OnGoingTrain = false    //没过火车标志
+                    trainway.removeAllChildren()
+                    OnGoingTrain = false
                 })
             })
             

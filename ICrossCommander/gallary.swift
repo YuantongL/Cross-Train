@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Lyt. All rights reserved.
 //
 
+//This class is the view of gallary
+
 import Foundation
 import SpriteKit
 
@@ -14,7 +16,7 @@ var dograv = false
 
 class gallary: SKScene {
     
-    var did = false;
+    var did = false;    //Record if the first time enter the view
     
     var back:SKSpriteNode!  //Back button
     var background:SKSpriteNode! //Background
@@ -24,6 +26,7 @@ class gallary: SKScene {
         if(did == false){
             did = true
             self.scaleMode = SKSceneScaleMode.AspectFill
+            
             //Background
             background = SKSpriteNode(texture:SKTexture(imageNamed:"background_gallary"))
             background.position = CGPoint(x:CGRectGetMidX(self.frame), y:CGRectGetMidY(self.frame))
@@ -44,7 +47,6 @@ class gallary: SKScene {
             transit_fan.setScale(1.0)
             self.addChild(transit_fan)
             
-            
             //Add 10 elements into the array
             for i in 0...9{
                 var content:SKSpriteNode = SKSpriteNode(texture: SKTexture(imageNamed: "gallary_content"))
@@ -56,11 +58,9 @@ class gallary: SKScene {
                 gallary_content.append(content)
             }
             
-            
             transit_fan.runAction(SKAction.moveTo(CGPoint(x:CGRectGetMidX(self.frame) - 1200, y:CGRectGetMidY(self.frame)), duration: 0.5), completion: {()
                 transit_fan.removeFromParent()
             })
-
         }else{
             var transit_fan:SKSpriteNode = SKSpriteNode(texture: SKTexture(imageNamed: "transit_zheng"))
             transit_fan.position = CGPoint(x:CGRectGetMidX(self.frame) + 130, y:CGRectGetMidY(self.frame))
@@ -71,22 +71,20 @@ class gallary: SKScene {
             transit_fan.runAction(SKAction.moveTo(CGPoint(x:CGRectGetMidX(self.frame) - 1200, y:CGRectGetMidY(self.frame)), duration: 0.5), completion: {()
                 transit_fan.removeFromParent()
             })
-
         }
     }
     
-    //Scrolling
+    //----------------------Functions for touches----------------------
     override func touchesMoved(touches: NSSet, withEvent event: UIEvent) {
         var touch:UITouch = touches.anyObject() as UITouch
         
         let pnow:CGPoint = touch.locationInNode(self)
         let pold:CGPoint = touch.previousLocationInNode(self)
         
-        let tran:CGFloat = pnow.y - pold.y  //小于零向下，大于零向上
-        
+        let tran:CGFloat = pnow.y - pold.y  //If < zero, move upwards
         
         if(tran < 0 && gallary_content[0].position.y > 550){
-            //向上翻
+            //Going upwards
             if(gallary_content[0].position.y + tran < 550){
                 for k in 0...gallary_content.count - 1{
                     gallary_content[k].position = CGPoint(x: CGRectGetMidX(self.frame), y: CGFloat(550 - k*130))
@@ -98,7 +96,7 @@ class gallary: SKScene {
                 }
             }
         }else if(tran > 0 && gallary_content[gallary_content.count - 1].position.y < 200){
-            //向下翻
+            //Going downwards
             if(gallary_content[gallary_content.count - 1].position.y + tran > 200){
                 for k in 0...gallary_content.count - 1{
                     gallary_content[k].position = CGPoint(x: CGRectGetMidX(self.frame), y: CGFloat(200 + (gallary_content.count - 1 - k)*130))
@@ -154,12 +152,14 @@ class gallary: SKScene {
             back.texture = SKTexture(imageNamed: "back_icon_t")
         }
     }
+    //----------------------End of touch functions----------------------
     
+    //This function was called each frame
     override func update(currentTime: CFTimeInterval) {
         //This function is used to implement scrolling gravity
         if(dograv == true){
             if(grav > 0){
-                //向上翻
+                //Go upwards
                 if(gallary_content[gallary_content.count - 1].position.y < 200){
                     if(gallary_content[gallary_content.count - 1].position.y + grav > 200){
                         for k in 0...gallary_content.count - 1{
@@ -179,7 +179,7 @@ class gallary: SKScene {
                     grav = 0
                 }
             }else if(grav < 0){
-                //向下翻
+                //Go down
                 if(gallary_content[0].position.y > 550){
                     if(gallary_content[0].position.y + grav < 550){
                         for k in 0...gallary_content.count - 1{

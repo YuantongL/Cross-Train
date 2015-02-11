@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Lyt. All rights reserved.
 //
 
+//This class is the view controller of all scenes, init all secenes and store them in the bank
+
 import UIKit
 import SpriteKit
 

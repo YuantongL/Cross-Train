@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Lyt. All rights reserved.
 //
 
+//This is the class for metric
+
 import Foundation
 import SpriteKit
 
@@ -57,7 +59,7 @@ class metric: SKScene {
     }
     
     
-    
+    //----------------------Functions for touches----------------------
     override func touchesEnded(touches: NSSet, withEvent event: UIEvent) {
         back.texture = SKTexture(imageNamed: "back_icon")
         var tnode:SKSpriteNode = self.nodeAtPoint((touches.anyObject() as UITouch).locationInNode(self)) as SKSpriteNode
@@ -84,5 +86,6 @@ class metric: SKScene {
             back.texture = SKTexture(imageNamed: "back_icon_t")
         }
     }
+    //----------------------end of function of touches----------------------
 
 }

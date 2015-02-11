@@ -6,10 +6,12 @@
 //  Copyright (c) 2014 Lyt. All rights reserved.
 //
 
+//This class is the view of mission select
+
 import Foundation
 import SpriteKit
 
-var zeropoint:CGFloat! //翻页效果基准中点
+var zeropoint:CGFloat! //zero point for every page
 
 class missionselect:SKScene {
     
@@ -26,13 +28,14 @@ class missionselect:SKScene {
     
     var mission_array:[SKSpriteNode] = []    //Missions
     var did = false
-    var current_page = 1    //第一页
+    var current_page = 1    //Record which page it is in
     
     override func didMoveToView(view: SKView) {
         if(did == false){
             did = true
             zeropoint = CGRectGetMidX(self.frame)
             self.scaleMode = SKSceneScaleMode.AspectFill
+            
             //Background
             background = SKSpriteNode(texture:SKTexture(imageNamed:"background_mission"))
             background.position = CGPoint(x:CGRectGetMidX(self.frame), y:CGRectGetMidY(self.frame))
@@ -50,8 +53,7 @@ class missionselect:SKScene {
             let action_r:SKAction = SKAction.repeatActionForever(SKAction.rotateByAngle(3.0, duration: 20.0))
             earth.runAction(action_r)
             
-            
-            //Gestures
+            //Declare gestures
             var swipe_right = UISwipeGestureRecognizer(target: self, action: "ges_right")
             swipe_right.direction = UISwipeGestureRecognizerDirection.Right
             self.view?.addGestureRecognizer(swipe_right)
@@ -80,8 +82,7 @@ class missionselect:SKScene {
             right.setScale(1.5)
             self.addChild(right)
             
-            
-            //---------Alert box---------------
+            //Alert box
             alert_box = SKSpriteNode(texture:SKTexture(imageNamed:"alert_box"))
             alert_box.position = CGPoint(x:CGRectGetMidX(self.frame) + 100, y:CGRectGetMidY(self.frame) + 100)
             alert_box.setScale(0.4)
@@ -89,7 +90,6 @@ class missionselect:SKScene {
             
             alert_box.alpha = 0.0
             alert_box.zPosition = 8
-            
             
             alert_yes = SKSpriteNode(texture:SKTexture(imageNamed:"alert_yes"))
             alert_yes.position = CGPoint(x:-300, y:-200)
@@ -102,7 +102,6 @@ class missionselect:SKScene {
             alert_no.setScale(0.7)
             alert_no.zPosition = 9
             alert_box.addChild(alert_no)
-            
             
             //Missions
             for i in 1...5{
@@ -143,13 +142,11 @@ class missionselect:SKScene {
             
             if(Bank.getpreviousscene() == 2){
                 Bank.storepreviousscene(0)  //Reset previous scene, in order to run the effect
-                
                 mission_array[Bank.getworld()-1].texture = SKTexture(image: Bank.getshot(Bank.getworld()))
                 
-                //缩小的效果
+                //shrink effect
                 let aa:SKAction = SKAction.scaleBy(0.5, duration: 0.3)
                 mission_array[current_page - 1].runAction(aa)
-
             }else{
                 var transit_fan:SKSpriteNode = SKSpriteNode(texture: SKTexture(imageNamed: "transit_zheng"))
                 transit_fan.position = CGPoint(x:CGRectGetMidX(self.frame) + 130, y:CGRectGetMidY(self.frame))
@@ -164,6 +161,7 @@ class missionselect:SKScene {
         }
     }
     
+    //----------------------Function for touches----------------------
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
         var tnode:SKSpriteNode = self.nodeAtPoint((touches.anyObject() as UITouch).locationInNode(self)) as SKSpriteNode
         
@@ -197,13 +195,13 @@ class missionselect:SKScene {
                 transit_zheng.removeFromParent()
             })
         }else if(tnode.isEqual(left)){
-            //向左翻页
+            //turn page left
             ges_right()
         }else if(tnode.isEqual(right)){
-            //向右翻页
+            //turn page right
             ges_left()
         }else if(tnode.isEqual(alert_yes)){
-            //点击yes
+            //click yes
             var fadein_act:SKAction = SKAction.fadeAlphaTo(0.0, duration: 0.2)
             var move_act:SKAction = SKAction.moveTo(CGPoint(x:CGRectGetMidX(self.frame) - 100, y:CGRectGetMidY(self.frame) + 100), duration: 0.2)
             var rotate_act:SKAction = SKAction.rotateByAngle(0.2, duration: 0.2)
@@ -221,12 +219,9 @@ class missionselect:SKScene {
                     Bank.storeScene(self, x: 6)
                     self.view?.presentScene(Bank.getScene(2))
                 })
-                
             })
-            
-            
         }else if(tnode.isEqual(alert_no)){
-            //点击no
+            //click no
             fadeout_alertbox()
         }else{
             for k in 0...4{
@@ -240,7 +235,7 @@ class missionselect:SKScene {
                     
                     if(Bank.getworld() == 0 || Bank.getworld() == self.current_page){
                         //If no previous world, or going in existing world
-                        //放大图像进入
+                        //enlarge the picture and enter
                         let aa:SKAction = SKAction.scaleBy(2.0, duration: 0.3)
                         mission_array[k].runAction(aa, completion: {()
                             Bank.storeworld(k + 1)
@@ -251,11 +246,7 @@ class missionselect:SKScene {
                         //Else if going in a new world, pop out the box
                         fadein_alertbox()
                     }
-                    
-                    
-                    
-                    println(k)
-                    
+                    //println(k)
                 }
             }
         }
@@ -267,9 +258,11 @@ class missionselect:SKScene {
             back.texture = SKTexture(imageNamed: "back_icon")
         }
     }
-
+    //----------------------end of touch functions----------------------
+    
+    //----------------------Gesture handlers----------------------
     func ges_right(){
-        //Handles swipe right, 向左翻页
+        //Handles swipe right, turn page left
         if(current_page != 1){
             zeropoint  = zeropoint + CGRectGetWidth(self.frame)
             current_page--
@@ -293,7 +286,7 @@ class missionselect:SKScene {
     }
     
     func ges_left(){
-        //Handles swipe left, 向右翻页
+        //Handles swipe left, turn page right
         if(current_page != 5){
             zeropoint = zeropoint - CGRectGetWidth(self.frame)
             current_page++
@@ -315,7 +308,9 @@ class missionselect:SKScene {
             
         }
     }
+    //----------------------end of gesture functions----------------------
     
+    //This function is called every frame, here for moving the background
     override func update(currentTime: CFTimeInterval) {
         //Use to turn pages
         var v = (zeropoint - mission_array[0].position.x)/8
@@ -335,27 +330,23 @@ class missionselect:SKScene {
         }
     }
     
-    
+    //This function is called when user wish to start a new game, push the alert to notify the user
     func fadein_alertbox(){
         self.addChild(alert_box)
-        
         var fadein_act:SKAction = SKAction.fadeAlphaTo(1.0, duration: 0.2)
         var move_act:SKAction = SKAction.moveTo(CGPoint(x:CGRectGetMidX(self.frame), y:CGRectGetMidY(self.frame)), duration: 0.2)
         var rotate_act:SKAction = SKAction.rotateByAngle(0.2, duration: 0.2)
         var combine:[SKAction] = [fadein_act, move_act, rotate_act]
-        
         var combine_act:SKAction = SKAction.group(combine)
         self.alert_box.runAction(combine_act)
-        
     }
     
+    //This function is called to fade out the alerbox just shown
     func fadeout_alertbox(){
-        
         var fadein_act:SKAction = SKAction.fadeAlphaTo(0.0, duration: 0.2)
         var move_act:SKAction = SKAction.moveTo(CGPoint(x:CGRectGetMidX(self.frame) - 100, y:CGRectGetMidY(self.frame) + 100), duration: 0.2)
         var rotate_act:SKAction = SKAction.rotateByAngle(0.2, duration: 0.2)
         var combine:[SKAction] = [fadein_act, move_act, rotate_act]
-        
         var combine_act:SKAction = SKAction.group(combine)
         self.alert_box.runAction(combine_act, completion: {()
             self.alert_box.position = CGPoint(x:CGRectGetMidX(self.frame) + 100, y:CGRectGetMidY(self.frame) + 100)
@@ -364,7 +355,6 @@ class missionselect:SKScene {
             
         })
     }
-    
 }
 
 

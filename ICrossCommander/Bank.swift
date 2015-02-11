@@ -5,8 +5,9 @@
 //  Created by Lyt on 11/14/14.
 //  Copyright (c) 2014 Lyt. All rights reserved.
 //
-//  This is the class stored everything I need
 //
+
+//  This is the class stored everything I need
 
 import Foundation
 import SpriteKit
@@ -85,9 +86,9 @@ struct Bank {
     }
     
     //-----------------screen shot------------------
-    //store number of level from 1 to
+    //store number of level from 1 to...
     static func getshot(num:Int) -> UIImage {
-        //num is level of 关
+        //num is level of stages
         return sc_shot[num - 1]
     }
     

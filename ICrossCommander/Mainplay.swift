@@ -5,23 +5,25 @@
 //  Created by Lyt on 9/8/14.
 //  Copyright (c) 2014 Lyt. All rights reserved.
 //
+
 //  This is the main game scene with trains and cars
 
 import SpriteKit
 
-var OnGoingTrain:Bool!  //来记录是否有火车正在过
+var OnGoingTrain:Bool!  //record if the train has been here
 
 class Mainplay: SKScene {
     //Starting porint of the cars
     let down = CGPoint(x: -400.0, y: -600.0)
     let up = CGPoint(x: 400.0, y: 600.0)
-    //How many cars in the line waiting
+    
+    //Number of cars in the line waiting
     var remain_l = 0
     var remain_r = 0
     
     let traffic_time = 7.5;
-    var level = 0  //当前多少级
-    var did_ornot = false   //纪录是不是一次进入这个view
+    var level = 0  //Current level
+    var did_ornot = false   //Record if the first time enter the view
     
     var timer_L:NSTimer!    //Timer for the cars
     var timer_R:NSTimer!
@@ -29,22 +31,20 @@ class Mainplay: SKScene {
     var timer_remain:NSTimer!   //Add cars according to level
     var timer_sec:NSTimer!      //Count every second
     
-    var GanZi_Up:Int = 1   //用来记录杆子有没有起来, 1 = 起来 －1 = 挡着  5 = 正在起  -5 = 正在下
+    var GanZi_Up:Int = 1   //Record the pole is up or not, 1 = up －1 = down  5 = raising  -5 = getting down
     
     var track_position_down:CGFloat = 46
     var track_position_up:CGFloat = 129
     
-    
     let track_ins = OnTrack()
     
-    
-    var backgroundS:SKSpriteNode!   //背景图片
+    var backgroundS:SKSpriteNode!   //background photo
     var back_icon:SKSpriteNode!
-    var track1:SKSpriteNode!        //下方铁轨
-    var track2:SKSpriteNode!        //上方铁轨
-    var truck_L:SKSpriteNode!         //左侧车道
-    var truck_R:SKSpriteNode!         //右侧车道
-    var back_components1:SKSpriteNode!  //电线杆
+    var track1:SKSpriteNode!        //down railway
+    var track2:SKSpriteNode!        //up railway
+    var truck_L:SKSpriteNode!         //left track
+    var truck_R:SKSpriteNode!         //right track
+    var back_components1:SKSpriteNode!  //tele pole
     var back_components2:SKSpriteNode!
     var back_components3:SKSpriteNode!
     var back_components4:SKSpriteNode!
@@ -65,27 +65,22 @@ class Mainplay: SKScene {
                 
                 back_components3.removeFromParent()
                 
-                //杆子要升起来
-                //back_components3.runAction(SKAction.rotateByAngle(1.57, duration: 0.0)); //让他竖起来
-                //杆子
+                //pole
                 var str = String(format: "GanZi_level_%d_L", self.world)
                 back_components3 = SKSpriteNode(texture: SKTexture(imageNamed: str))
                 back_components3.anchorPoint = CGPoint(x:0.08, y:0.5)
-                //back_components3.runAction(SKAction.rotateByAngle(1.57, duration: 0.0)); //让他竖起来
                 back_components3.position = CGPoint(x:CGRectGetMidX(self.frame) - 245, y:CGRectGetMidY(self.frame) - 10)
                 back_components3.zPosition = 7
                 back_components3.setScale(0.905)
                 back_components3.zRotation = 1.57
                 self.addChild(back_components3)
                 GanZi_Up = 1
-
                 
                 //If world changed
                 backgroundS.texture = SKTexture(imageNamed: String(format: "background_level_%d_L", self.world))
                 back_components1.texture = SKTexture(imageNamed: String(format: "DXG_level_%d_L", self.world))
                 back_components2.texture = SKTexture(imageNamed: String(format: "GanJia_level_%d_L", self.world))
                 back_components4.texture = SKTexture(imageNamed: String(format: "PoliceRoom_level_%d_L", self.world))
-                
                 
                 //Add the gestures again to the view
                 var swipe_up = UISwipeGestureRecognizer(target: self, action: "ges_up")
@@ -138,10 +133,6 @@ class Mainplay: SKScene {
                     userInfo: nil,
                     repeats: true
                 )
-
-                
-                
-                
             }else{
                 //If world changed and game init
                 
@@ -154,24 +145,24 @@ class Mainplay: SKScene {
                 backgroundS.position = CGPoint(x:CGRectGetMidX(self.frame), y:CGRectGetMidY(self.frame))
                 self.scaleMode = SKSceneScaleMode.AspectFill
                 backgroundS.setScale(0.905)
-                backgroundS.zPosition = 0       //设置景深
+                backgroundS.zPosition = 0       //view depth
                 self.addChild(backgroundS)
                 
-                //声明上方铁轨
+                //top rail
                 track2 = SKSpriteNode()
                 track2.zPosition = 3
                 track2.setScale(0.905)
                 self.addChild(track2)
                 
-                //---------------------------车道-------------------------------
-                //左侧车道
+                //---------------------------tracks-------------------------------
+                //left track
                 truck_L = SKSpriteNode()
                 truck_L.position = CGPoint(x:CGRectGetMidX(self.frame) - 98, y:CGRectGetMidY(self.frame))
                 truck_L.zPosition = 0
                 truck_L.setScale(0.905)
                 self.addChild(truck_L)
                 
-                //右侧车道
+                //right track
                 truck_R = SKSpriteNode()
                 truck_R.position = CGPoint(x:CGRectGetMidX(self.frame) + 20, y:CGRectGetMidY(self.frame))
                 truck_R.zPosition = 0
@@ -179,7 +170,7 @@ class Mainplay: SKScene {
                 self.addChild(truck_R)
                 //----------------------------------------------------------
                 
-                //电线杆
+                //tele pole
                 str = String(format: "DXG_level_%d_L", self.world)
                 back_components1 = SKSpriteNode(texture: SKTexture(imageNamed: str))
                 back_components1.position = CGPoint(x:CGRectGetMidX(self.frame), y:CGRectGetMidY(self.frame) + 120)
@@ -187,13 +178,13 @@ class Mainplay: SKScene {
                 back_components1.setScale(0.905)
                 self.addChild(back_components1)
                 
-                //声明下方铁轨
+                //down rail
                 track1 = SKSpriteNode()
                 track1.zPosition = 5
                 track1.setScale(0.905)
                 self.addChild(track1)
                 
-                //杆子的柱子
+                //tele pole stick
                 str = String(format: "GanJia_level_%d_L", self.world)
                 back_components2 = SKSpriteNode(texture: SKTexture(imageNamed: str))
                 back_components2.position = CGPoint(x:CGRectGetMidX(self.frame) - 80, y:CGRectGetMidY(self.frame) - 30)
@@ -201,7 +192,7 @@ class Mainplay: SKScene {
                 back_components2.setScale(0.905)
                 self.addChild(back_components2)
                 
-                //杆子
+                //the stick
                 str = String(format: "GanZi_level_%d_L", self.world)
                 back_components3 = SKSpriteNode(texture: SKTexture(imageNamed: str))
                 back_components3.anchorPoint = CGPoint(x:0.08, y:0.5)
@@ -212,7 +203,7 @@ class Mainplay: SKScene {
                 
                 self.addChild(back_components3)
                 
-                //警亭
+                //police room
                 str = String(format: "PoliceRoom_level_%d_L", self.world)
                 back_components4 = SKSpriteNode(texture: SKTexture(imageNamed: str))
                 back_components4.position = CGPoint(x:CGRectGetMidX(self.frame) - 385, y:CGRectGetMidY(self.frame) - 120)
@@ -340,10 +331,7 @@ class Mainplay: SKScene {
                 userInfo: nil,
                 repeats: true
             )
-            
         }
-        
-    
     }
     
     
@@ -362,12 +350,11 @@ class Mainplay: SKScene {
             
             //------------------- transition between scene------------------
             //Take a screenshot
-            
             UIGraphicsBeginImageContext(CGSizeMake(1136, 640)) //Create a image in the size of the view
             self.view?.drawViewHierarchyInRect(CGRectMake(0.0, 0.0, 1136, 640), afterScreenUpdates: true)
             let shot = UIGraphicsGetImageFromCurrentImageContext()
             UIGraphicsEndImageContext()
-            Bank.storeshot(shot, num: world)    //存储截图
+            Bank.storeshot(shot, num: world)    //store the screen shot
             
             Bank.storepreviousscene(2)
             Bank.storeScene(self, x: 2)
@@ -391,11 +378,12 @@ class Mainplay: SKScene {
         }
     }
     
+    //This function is gesture handler for the stick up
     func ges_up() {
-        //向上滑动，杆子抬起
+        //slide to lift the stick
 
         if(GanZi_Up == -1){
-            //如果杆子放下来了，并且火车过完了，点击会让杆子抬起来
+            //If the sign is down, and train has come through, slide would lift the sign
             GanZi_Up = 5
             back_components3.runAction(SKAction.rotateByAngle(1.57, duration: 2), completion: {()
                 self.GanZi_Up = 1
@@ -407,25 +395,23 @@ class Mainplay: SKScene {
                 for c in self.truck_R.children as [SKSpriteNode] {
                     c.paused = false
                 }
-                
-            });
+            })
         }
-        
     }
     
+    //This function is gesture handler for the stick down
     func ges_down() {
-        //向下滑动，杆子下来
+        //slide down to low the stick
         if(GanZi_Up == 1){
             GanZi_Up = -5
-            //如果杆子是起来的状态，就放下
+            //If the sign is up, slide to low the stick
             back_components3.runAction(SKAction.rotateByAngle(-1.57, duration: 2), completion: {()
                 self.GanZi_Up = -1
             })
         }
     }
     
-    
-    
+    //This function set the traffic according to the number of cars on the way
     func MovementSet(lorr:Int) {
         //This function add traffic into left or right car line    0=L 1=R
         let randnum = Int(arc4random_uniform(2))    //Random the car
@@ -479,10 +465,9 @@ class Mainplay: SKScene {
         }
     }
     
-    
+    //This function was called every frame, here function as a observer for the situation of cars on the track
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
-        //println(remain_l)
         
         //check for cross the railway
         for c in truck_L.children as [SKSpriteNode] {
@@ -499,7 +484,7 @@ class Mainplay: SKScene {
         
         //check for stop at the sign
         if(GanZi_Up != 1){
-            //如果杆子下来了，就时刻检查
+            //If the stick is down, then check every frame
             var count:CGFloat = 0;
             for c in truck_L.children as [SKSpriteNode] {
                 if(c.position.y < (-130 - count * 200) && c.position.y > (-150 - count * 200)){
@@ -520,8 +505,7 @@ class Mainplay: SKScene {
     
     
     
-    //Timer call back----------------------------------------------------------------
-    
+    //-------------------------------Timer call backs---------------------------------
     func tcom() {
         
         timer_train.invalidate()
@@ -530,8 +514,6 @@ class Mainplay: SKScene {
         //This function controls how to gengerate the train
         var randnum_way = Int(arc4random_uniform(2))    //Up or Down
         var randnum_kind = Int(arc4random_uniform(2))   //Which kind of train
-        //randnum_way = 1
-        //randnum_kind = 0
         if(randnum_way == 0){
             //Up way
             track2.position = CGPoint(x:CGRectGetMidX(self.frame) - 1200, y:CGRectGetMidY(self.frame) + track_position_up)
@@ -556,8 +538,7 @@ class Mainplay: SKScene {
         
     }
     
-    
-    //Timer L R callback, 如果杆子不是升起的时候就产生新车
+    //Timer L R callback, if the stick is up, generate new cars on the road
     func result_L() {
         if(GanZi_Up != 1){
             var numchild = truck_L.children.count

@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Lyt. All rights reserved.
 //
 
+//This class is for the leaderboard view
+
 import Foundation
 import SpriteKit
 
@@ -54,12 +56,10 @@ class leaderboard: SKScene {
                 transit_fan.removeFromParent()
             })
         }
-        
-        
     }
     
     
-    
+    //----------------------Functions of touches----------------------
     override func touchesEnded(touches: NSSet, withEvent event: UIEvent) {
         back.texture = SKTexture(imageNamed: "back_icon")
         var tnode:SKSpriteNode = self.nodeAtPoint((touches.anyObject() as UITouch).locationInNode(self)) as SKSpriteNode
@@ -86,5 +86,6 @@ class leaderboard: SKScene {
             back.texture = SKTexture(imageNamed: "back_icon_t")
         }
     }
+    //----------------------End of touches functions----------------------
 
 }

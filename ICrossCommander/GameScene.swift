@@ -5,15 +5,13 @@
 //  Created by Lyt on 11/14/14.
 //  Copyright (c) 2014 Lyt. All rights reserved.
 //
+
 //  This is the scene that initial appear when enter the app
 
 import SpriteKit
 
-//let buttonscale_big:CGFloat = 2.5
-//let buttonscale_small:CGFloat = 2.0
-
 var Back_Rect:SKSpriteNode!     //Back
-var WelcomeS:SKSpriteNode!   //电线杆
+var WelcomeS:SKSpriteNode!   //The telegraph pole
 var logo:SKSpriteNode!      //Logo
 var Mountain:SKSpriteNode!  //Mountain
 var Heavy_rotation:SKSpriteNode!    //Rotation
@@ -28,10 +26,9 @@ var train_next:SKSpriteNode!    //train body
 
 class GameScene: SKScene {
     
-    var did = false
+    var did = false     //Stores if is the first time move to this view
     
     override func didMoveToView(view: SKView) {
-        
         if(did == false){
             did = true
             self.scaleMode = SKSceneScaleMode.AspectFill
@@ -42,7 +39,7 @@ class GameScene: SKScene {
             Back_Rect.zPosition = 1
             self.addChild(Back_Rect)
             
-            //DianXianGan
+            //telegraph pole
             WelcomeS = SKSpriteNode(texture:SKTexture(imageNamed:"Welcome"))
             WelcomeS.position = CGPoint(x:CGRectGetMidX(self.frame) + self.frame.width/2, y:CGRectGetMidY(self.frame))
             WelcomeS.setScale(0.91)
@@ -128,8 +125,7 @@ class GameScene: SKScene {
             })
 
         }else{
-            
-            //transition between scenes
+            //If it's not the first time move into the view, then transition between scenes
             self.paused = false
             
             var transit_zheng:SKSpriteNode = SKSpriteNode(texture: SKTexture(imageNamed: "transit_fan"))
@@ -145,25 +141,21 @@ class GameScene: SKScene {
         }
     }
     
-    
+    //This function reset the position of background when animation of rolling complete
     func repeatBack(which:Int){
         if(which == 0){
-            //If dianxiangan
+            //telegraph pole
             WelcomeS.position = CGPoint(x:CGRectGetMidX(self.frame) + self.frame.width/2, y:CGRectGetMidY(self.frame))
-            
             //Set background rolling
             let action_b:SKAction = SKAction.moveTo(CGPoint(x:CGRectGetMidX(self.frame) - self.frame.width/2, y:CGRectGetMidY(self.frame)), duration: 2.5)
-            
             WelcomeS.runAction(action_b, completion: {()
                 self.repeatBack(which);
             })
         }else if(which == 1){
-            //If dianxiangan
+            //telegraph pole
             Back_Rect.position = CGPoint(x:CGRectGetMidX(self.frame) + self.frame.width/2, y:CGRectGetMidY(self.frame))
-            
             //Set background rolling
             let action_c:SKAction = SKAction.moveTo(CGPoint(x:CGRectGetMidX(self.frame) - self.frame.width/2, y:CGRectGetMidY(self.frame)), duration: 2.5)
-            
             Back_Rect.runAction(action_c, completion: {()
                 self.repeatBack(which);
             })
@@ -172,11 +164,12 @@ class GameScene: SKScene {
     }
     
     
+    //----------------------Functions for touch----------------------
     
     override func touchesEnded(touches: NSSet, withEvent event: UIEvent) {
-        
         var tnode:SKSpriteNode = self.nodeAtPoint((touches.anyObject() as UITouch).locationInNode(self)) as SKSpriteNode
         
+        //If user touch on a button
         if(tnode.isEqual(enter_game) || tnode.isEqual(enter_gallary) || tnode.isEqual(enter_metric) || tnode.isEqual(enter_leaderboard)){
             
             //transition to main gameplay
@@ -221,7 +214,6 @@ class GameScene: SKScene {
     }
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
-        
         var tnode:SKSpriteNode = self.nodeAtPoint((touches.anyObject() as UITouch).locationInNode(self)) as SKSpriteNode
         
         if(tnode.isEqual(enter_game)){
@@ -240,7 +232,6 @@ class GameScene: SKScene {
     }
     
     override func touchesMoved(touches: NSSet, withEvent event: UIEvent) {
-        
         var tnode:SKSpriteNode = self.nodeAtPoint((touches.anyObject() as UITouch).locationInNode(self)) as SKSpriteNode
         
         if(tnode.isEqual(enter_game)){
@@ -267,12 +258,12 @@ class GameScene: SKScene {
         }
     }
     
+    //----------------------end of touch functions----------------------
+    
+    //This function was called every frame
     override func update(currentTime: NSTimeInterval) {
         
     }
-    
-    
-    
 }
 
 
