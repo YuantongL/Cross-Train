@@ -75,8 +75,8 @@ class gallary: SKScene {
     }
     
     //----------------------Functions for touches----------------------
-    override func touchesMoved(touches: NSSet, withEvent event: UIEvent) {
-        var touch:UITouch = touches.anyObject() as UITouch
+    override func touchesMoved(touches: Set<NSObject>, withEvent event: UIEvent) {
+        var touch:UITouch = touches.first as! UITouch
         
         let pnow:CGPoint = touch.locationInNode(self)
         let pold:CGPoint = touch.previousLocationInNode(self)
@@ -117,11 +117,12 @@ class gallary: SKScene {
         
     }
     
-    override func touchesEnded(touches: NSSet, withEvent event: UIEvent) {
+    
+    override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
         dograv = true
         
         back.texture = SKTexture(imageNamed: "back_icon")
-        var tnode:SKSpriteNode = self.nodeAtPoint((touches.anyObject() as UITouch).locationInNode(self)) as SKSpriteNode
+        var tnode:SKSpriteNode = self.nodeAtPoint((touches.first as! UITouch).locationInNode(self)) as! SKSpriteNode
         
         if(tnode.isEqual(back)){
             //back to main
@@ -144,10 +145,11 @@ class gallary: SKScene {
         }
     }
     
-    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
+    
+    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
         dograv = false
         
-        var tnode:SKSpriteNode = self.nodeAtPoint((touches.anyObject() as UITouch).locationInNode(self)) as SKSpriteNode
+        var tnode:SKSpriteNode = self.nodeAtPoint((touches.first as! UITouch).locationInNode(self)) as! SKSpriteNode
         if(tnode.isEqual(back)){
             back.texture = SKTexture(imageNamed: "back_icon_t")
         }

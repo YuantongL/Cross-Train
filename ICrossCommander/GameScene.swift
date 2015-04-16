@@ -165,9 +165,8 @@ class GameScene: SKScene {
     
     
     //----------------------Functions for touch----------------------
-    
-    override func touchesEnded(touches: NSSet, withEvent event: UIEvent) {
-        var tnode:SKSpriteNode = self.nodeAtPoint((touches.anyObject() as UITouch).locationInNode(self)) as SKSpriteNode
+    override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
+        var tnode:SKSpriteNode = self.nodeAtPoint((touches.first as! UITouch).locationInNode(self)) as! SKSpriteNode
         
         //If user touch on a button
         if(tnode.isEqual(enter_game) || tnode.isEqual(enter_gallary) || tnode.isEqual(enter_metric) || tnode.isEqual(enter_leaderboard)){
@@ -213,8 +212,8 @@ class GameScene: SKScene {
         }
     }
     
-    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
-        var tnode:SKSpriteNode = self.nodeAtPoint((touches.anyObject() as UITouch).locationInNode(self)) as SKSpriteNode
+    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+        var tnode:SKSpriteNode = self.nodeAtPoint((touches.first as! UITouch).locationInNode(self)) as! SKSpriteNode
         
         if(tnode.isEqual(enter_game)){
             enter_game.texture = SKTexture(imageNamed: "enter_game_t")
@@ -231,8 +230,9 @@ class GameScene: SKScene {
         }
     }
     
-    override func touchesMoved(touches: NSSet, withEvent event: UIEvent) {
-        var tnode:SKSpriteNode = self.nodeAtPoint((touches.anyObject() as UITouch).locationInNode(self)) as SKSpriteNode
+    
+    override func touchesMoved(touches: Set<NSObject>, withEvent event: UIEvent) {
+        var tnode:SKSpriteNode = self.nodeAtPoint((touches.first as! UITouch).locationInNode(self))as! SKSpriteNode
         
         if(tnode.isEqual(enter_game)){
             enter_game.texture = SKTexture(imageNamed: "enter_game_t")

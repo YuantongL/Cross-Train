@@ -107,7 +107,7 @@ class missionselect:SKScene {
             for i in 1...5{
                 //Store image in bank
                 var str:NSString = NSString(format: "mission_%d", i)
-                var content:UIImage = UIImage(named: str)!
+                var content:UIImage = UIImage(named: str as String)!
                 Bank.sc_shot.append(content)
             }
             
@@ -162,17 +162,17 @@ class missionselect:SKScene {
     }
     
     //----------------------Function for touches----------------------
-    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
-        var tnode:SKSpriteNode = self.nodeAtPoint((touches.anyObject() as UITouch).locationInNode(self)) as SKSpriteNode
+    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+        var tnode:SKSpriteNode = self.nodeAtPoint((touches.first as! UITouch).locationInNode(self)) as! SKSpriteNode
         
         if(tnode.isEqual(back)){
             back.texture = SKTexture(imageNamed: "back_icon_t")
         }
     }
     
-    override func touchesEnded(touches: NSSet, withEvent event: UIEvent) {
+    override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
         back.texture = SKTexture(imageNamed: "back_icon")
-        var tnode:SKSpriteNode = self.nodeAtPoint((touches.anyObject() as UITouch).locationInNode(self)) as SKSpriteNode
+        var tnode:SKSpriteNode = self.nodeAtPoint((touches.first as! UITouch).locationInNode(self)) as! SKSpriteNode
         
         if(tnode.isEqual(back)){
             //back to main
@@ -185,7 +185,7 @@ class missionselect:SKScene {
             //remove all gestures
             if let recognizers = self.view?.gestureRecognizers {
                 for recognizer in recognizers {
-                    self.view?.removeGestureRecognizer(recognizer as UIGestureRecognizer)
+                    self.view?.removeGestureRecognizer(recognizer as! UIGestureRecognizer)
                 }
             }
             
@@ -229,7 +229,7 @@ class missionselect:SKScene {
                     //remove all gestures
                     if let recognizers = self.view?.gestureRecognizers {
                         for recognizer in recognizers {
-                            self.view?.removeGestureRecognizer(recognizer as UIGestureRecognizer)
+                            self.view?.removeGestureRecognizer(recognizer as! UIGestureRecognizer)
                         }
                     }
                     
@@ -252,8 +252,8 @@ class missionselect:SKScene {
         }
     }
     
-    override func touchesMoved(touches: NSSet, withEvent event: UIEvent) {
-        var tnode:SKSpriteNode = self.nodeAtPoint((touches.anyObject() as UITouch).locationInNode(self)) as SKSpriteNode
+    override func touchesMoved(touches: Set<NSObject>, withEvent event: UIEvent) {
+        var tnode:SKSpriteNode = self.nodeAtPoint((touches.first as! UITouch).locationInNode(self)) as! SKSpriteNode
         if(!tnode.isEqual(back)){
             back.texture = SKTexture(imageNamed: "back_icon")
         }

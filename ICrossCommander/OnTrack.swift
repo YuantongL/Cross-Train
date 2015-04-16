@@ -32,7 +32,7 @@ class OnTrack {
         
         var str:NSString = String(format: "Train_%@_%d_%@_L", wstr, train + 1, compo)
         
-        returnnode = SKSpriteNode(imageNamed: str)
+        returnnode = SKSpriteNode(imageNamed: str as String)
         
         return returnnode
     }

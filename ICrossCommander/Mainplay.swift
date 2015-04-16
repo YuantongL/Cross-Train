@@ -334,17 +334,16 @@ class Mainplay: SKScene {
         }
     }
     
-    
-    override func touchesEnded(touches: NSSet, withEvent event: UIEvent) {
+    override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
         /* Called when a touch begins */
         back_icon.texture = SKTexture(imageNamed: "back_icon")
-        var tnode:SKSpriteNode = self.nodeAtPoint((touches.anyObject() as UITouch).locationInNode(self)) as SKSpriteNode
+        var tnode:SKSpriteNode = self.nodeAtPoint((touches.first as! UITouch).locationInNode(self)) as! SKSpriteNode
         
         if(tnode.isEqual(back_icon)){
             //remove all gestures
             if let recognizers = self.view?.gestureRecognizers {
                 for recognizer in recognizers {
-                    self.view?.removeGestureRecognizer(recognizer as UIGestureRecognizer)
+                    self.view?.removeGestureRecognizer(recognizer as! UIGestureRecognizer)
                 }
             }
             
@@ -371,8 +370,8 @@ class Mainplay: SKScene {
         }
     }
     
-    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
-        var tnode:SKSpriteNode = self.nodeAtPoint((touches.anyObject() as UITouch).locationInNode(self)) as SKSpriteNode
+    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+        var tnode:SKSpriteNode = self.nodeAtPoint((touches.first as! UITouch).locationInNode(self)) as! SKSpriteNode
         if(tnode.isEqual(back_icon)){
             back_icon.texture = SKTexture(imageNamed: "back_icon_t")
         }
@@ -388,11 +387,11 @@ class Mainplay: SKScene {
             back_components3.runAction(SKAction.rotateByAngle(1.57, duration: 2), completion: {()
                 self.GanZi_Up = 1
                 
-                for c in self.truck_L.children as [SKSpriteNode] {
+                for c in self.truck_L.children as! [SKSpriteNode] {
                     c.paused = false
                 }
                 
-                for c in self.truck_R.children as [SKSpriteNode] {
+                for c in self.truck_R.children as! [SKSpriteNode] {
                     c.paused = false
                 }
             })
@@ -451,7 +450,7 @@ class Mainplay: SKScene {
             truck2.position = up
             truck2.setScale(1.0)
             var x:CGFloat = 0
-            for c in truck_R.children as [SKSpriteNode] {
+            for c in truck_R.children as! [SKSpriteNode] {
                 c.zPosition = 2 - x*0.1
                 x++
             }
@@ -470,12 +469,12 @@ class Mainplay: SKScene {
         /* Called before each frame is rendered */
         
         //check for cross the railway
-        for c in truck_L.children as [SKSpriteNode] {
+        for c in truck_L.children as! [SKSpriteNode] {
             if(c.position.y > 50){
                 c.zPosition = 1
             }
         }
-        for c in truck_R.children as [SKSpriteNode] {
+        for c in truck_R.children as! [SKSpriteNode] {
             if(c.position.y < 50){
                 c.zPosition += 7
             }
@@ -486,7 +485,7 @@ class Mainplay: SKScene {
         if(GanZi_Up != 1){
             //If the stick is down, then check every frame
             var count:CGFloat = 0;
-            for c in truck_L.children as [SKSpriteNode] {
+            for c in truck_L.children as! [SKSpriteNode] {
                 if(c.position.y < (-130 - count * 200) && c.position.y > (-150 - count * 200)){
                     count = count + 1.0
                     c.paused = true
@@ -494,7 +493,7 @@ class Mainplay: SKScene {
             }
             
             count = 0
-            for c in truck_R.children as [SKSpriteNode] {
+            for c in truck_R.children as! [SKSpriteNode] {
                 if(c.position.y > (210 + count * 200) && c.position.y < (230 + count * 200)){
                     count = count + 1.0
                     c.paused = true

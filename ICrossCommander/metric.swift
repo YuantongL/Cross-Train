@@ -60,9 +60,9 @@ class metric: SKScene {
     
     
     //----------------------Functions for touches----------------------
-    override func touchesEnded(touches: NSSet, withEvent event: UIEvent) {
+    override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
         back.texture = SKTexture(imageNamed: "back_icon")
-        var tnode:SKSpriteNode = self.nodeAtPoint((touches.anyObject() as UITouch).locationInNode(self)) as SKSpriteNode
+        var tnode:SKSpriteNode = self.nodeAtPoint((touches.first as! UITouch).locationInNode(self)) as! SKSpriteNode
         
         if(tnode.isEqual(back)){
             //back to main
@@ -80,8 +80,8 @@ class metric: SKScene {
         }
     }
     
-    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
-        var tnode:SKSpriteNode = self.nodeAtPoint((touches.anyObject() as UITouch).locationInNode(self)) as SKSpriteNode
+    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+        var tnode:SKSpriteNode = self.nodeAtPoint((touches.first as! UITouch).locationInNode(self)) as! SKSpriteNode
         if(tnode.isEqual(back)){
             back.texture = SKTexture(imageNamed: "back_icon_t")
         }
