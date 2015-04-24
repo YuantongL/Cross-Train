@@ -32,14 +32,12 @@ class GameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         if let scene = GameScene.unarchiveFromFile("GameScene") as? GameScene {
-            // Configure the view. 
-            
+            // Configure the view.
             Bank.storeScene(Mainplay.init(size: CGSizeMake(scene.frame.width, scene.frame.height)), x: 2)
             Bank.storeScene(gallary.init(size: CGSizeMake(scene.frame.width, scene.frame.height)), x: 3)
             Bank.storeScene(metric.init(size: CGSizeMake(scene.frame.width, scene.frame.height)), x: 4)
             Bank.storeScene(leaderboard.init(size: CGSizeMake(scene.frame.width, scene.frame.height)), x: 5)
             Bank.storeScene(missionselect.init(size: CGSizeMake(scene.frame.width, scene.frame.height)), x: 6)
-            
             
             let skView = self.view as! SKView
             skView.showsFPS = true
@@ -52,8 +50,6 @@ class GameViewController: UIViewController {
             scene.scaleMode = .AspectFill
             
             skView.presentScene(scene)
-            
-            
         }
     }
 

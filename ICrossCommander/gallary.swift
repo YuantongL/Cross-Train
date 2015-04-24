@@ -117,7 +117,6 @@ class gallary: SKScene {
         
     }
     
-    
     override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
         dograv = true
         

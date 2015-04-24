@@ -82,6 +82,7 @@
 		444432971A573F5F00815271 /* alert_no.png in Resources */ = {isa = PBXBuildFile; fileRef = 444432941A573F5F00815271 /* alert_no.png */; };
 		444432981A573F5F00815271 /* alert_yes.png in Resources */ = {isa = PBXBuildFile; fileRef = 444432951A573F5F00815271 /* alert_yes.png */; };
 		4444C98C1A1830F300E72ECC /* Mainplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4444C98B1A1830F300E72ECC /* Mainplay.swift */; };
+		44669A3D1AEA9A850065A94A /* LOGO.png in Resources */ = {isa = PBXBuildFile; fileRef = 44669A3C1AEA9A850065A94A /* LOGO.png */; };
 		44CAAE161A486EDD0059BD0C /* gallary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44CAAE151A486EDD0059BD0C /* gallary.swift */; };
 		44CAAE181A486EE70059BD0C /* metric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44CAAE171A486EE70059BD0C /* metric.swift */; };
 		44CAAE1A1A486EF40059BD0C /* leaderboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44CAAE191A486EF40059BD0C /* leaderboard.swift */; };
@@ -181,6 +182,7 @@
 		444432941A573F5F00815271 /* alert_no.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = alert_no.png; sourceTree = "<group>"; };
 		444432951A573F5F00815271 /* alert_yes.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = alert_yes.png; sourceTree = "<group>"; };
 		4444C98B1A1830F300E72ECC /* Mainplay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mainplay.swift; sourceTree = "<group>"; };
+		44669A3C1AEA9A850065A94A /* LOGO.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LOGO.png; path = Pictures/LOGO.png; sourceTree = SOURCE_ROOT; };
 		44CAAE151A486EDD0059BD0C /* gallary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = gallary.swift; sourceTree = "<group>"; };
 		44CAAE171A486EE70059BD0C /* metric.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = metric.swift; sourceTree = "<group>"; };
 		44CAAE191A486EF40059BD0C /* leaderboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = leaderboard.swift; sourceTree = "<group>"; };
@@ -312,6 +314,7 @@
 				440739B01A55AC5B005F6373 /* transit_zheng.png */,
 				440739B21A55AC5B005F6373 /* Welcome.png */,
 				44FF1F581A55F2F6002BDB65 /* Earth.png */,
+				44669A3C1AEA9A850065A94A /* LOGO.png */,
 			);
 			name = gamesymbols;
 			path = Pictures/gamesymbols;
@@ -602,6 +605,7 @@
 				44073A0C1A55AC5B005F6373 /* background_metric.png in Resources */,
 				442D32121A55D8B7002F6B82 /* Train_China_1_Mid_L.png in Resources */,
 				44383BF51A56F2B400393144 /* GanJia_level_4_L.png in Resources */,
+				44669A3D1AEA9A850065A94A /* LOGO.png in Resources */,
 				44383C011A56F3A800393144 /* GanJia_level_5_L.png in Resources */,
 				442D32111A55D8B7002F6B82 /* Train_China_1_Head_L.png in Resources */,
 				440739E51A55AC5B005F6373 /* enter_metric_t.png in Resources */,
@@ -770,7 +774,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = ICrossCommander/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "Cross&Train";
 			};
@@ -783,7 +787,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = ICrossCommander/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "Cross&Train";
 			};
@@ -804,7 +808,6 @@
 				INFOPLIST_FILE = ICrossCommanderTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ICrossCommander.app/ICrossCommander";
 			};
 			name = Debug;
 		};
@@ -819,7 +822,6 @@
 				INFOPLIST_FILE = ICrossCommanderTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ICrossCommander.app/ICrossCommander";
 			};
 			name = Release;
 		};
